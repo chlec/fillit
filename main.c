@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/13 16:11:33 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/13 16:18:10 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,19 @@ int		main(int argc, char **argv)
 		}
 		c[i] = 0;
 		list = ft_create_elem(c, 0, 0);
-		list = list->next;
 		if (first == 0) 
 		{
 			first = list;
 			printf("first made\n");
 		}
+		list = list->next;
+		if (first == 0) 
+			first = list;
 		x += 4;
 	}
 	i = 0;
-	printf("%s\n", first->content[0]);
-	/*while ((first->content)[i])
+	while ((first->content)[i])
 	{
 		printf("%s\n", (first->content)[i++]);
-	}*/
+	}
 }
