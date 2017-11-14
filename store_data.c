@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/16 11:50:28 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/13 14:57:39 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/14 17:11:10 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,27 +60,50 @@ int		nb_words(char *str)
 	return (words);
 }
 
-char	**split_by_jumpline(char *str)
+t_list	*split_by_jumpline(char *str)
 {
+	t_list	*head;
+	t_list	*list;
+	t_tetrim *content;
 	char	**tab;
+	char	*word;
 	int		start;
 	int		end;
 	int		id;
+	int		j;
 
-	tab = (char**)malloc(sizeof(*tab) * nb_words(str) + 1);
+	tab = (char**)malloc(sizeof(*tab) * nb_words(str) + 100);
 	end = 0;
 	start = 0;
 	id = 0;
+	list = 0;
+	content = 0;
+	head = 0;
 	while (str[end])
 	{
-		if (str[end + 1] == '\n')
+		if (str[end + 1] == '\n') //&& str[end] != '\n')
 		{
-			if (get_word(str, start, end)[0] != '\n')
-				tab[id++] = get_word(str, start, end);
+			word = get_word(str, start, end);
+			if (word[0] != '\n' && word[0] != '\0' && str[end + 1] != '\0')
+			{
+				tab[id++] = word;
+			}
+			else
+			{
+				tab[id] = 0;
+				content = ft_create_elem(tab, 0, 0);
+				list = ft_lstnew(content, 21);
+				if (head == 0)
+					head = list;
+				list = list->next;
+				free(tab);
+				tab = (char**)malloc(sizeof(*tab) * nb_words(str) + 100);
+				id = 0;
+			}
 			start = end + 2;
 		}
 		end++;
 	}
-	tab[id] = 0;
-	return (tab);
+	free(tab);
+	return (head);
 }

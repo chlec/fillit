@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:53:29 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/13 16:01:13 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/14 16:53:36 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <string.h>
 # define BUF_SIZE 20
 
-char	**split_by_jumpline(char *str);
+
 char	*ft_strcpy(char *dest, char *src);
 char	*ft_strcat(char *dest, char *src);
 typedef struct	s_tetrim
@@ -27,7 +27,17 @@ typedef struct	s_tetrim
 	char	**content;
 	int		x;
 	int		y;
-	struct s_tetrim *next;
 }				t_tetrim;
 t_tetrim *ft_create_elem(char **content, int x, int y);
+
+typedef struct	s_list
+{
+	void			*content;
+	size_t			content_size;
+	struct s_list	*next;
+}				t_list;
+t_list	*ft_lstnew(void const *content, size_t content_size);
+void			ft_lstadd(t_list **alst, t_list *new);
+t_list	*split_by_jumpline(char *str);
+char			*ft_strdup(const char *s1);
 #endif
