@@ -21,9 +21,10 @@ int		check_square(char *str)
 	j = 0;
 	while (str[i])
 	{
+		j++;
 		if (str[i] == '\n')
 		{
-			if (j != 4 && j != 1)
+			if (j != 5 && j != 1)
 			{
 				printf("j: %d\n", j);
 				return (0);
@@ -31,7 +32,6 @@ int		check_square(char *str)
 			j = 0;
 		}
 		i++;
-		j++;
 	}
 	return (1);
 }

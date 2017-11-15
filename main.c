@@ -71,16 +71,21 @@ int		main(int argc, char **argv)
 	int		x;
 	int 	y;
 	int		i;
+	int		j;
+	j = 0;
+	x = 0;
 	
 	tab = (char**)malloc(sizeof(**tab) * 20);
 	while (x < 20)
 	{
+		tab[x] = (char*)malloc(sizeof(char) * 20);
 		while (j < 20)
 		{
+
 			tab[x][j] = '.';
 			j++;
 		}
-		i++;
+		x++;
 	}
 	fd = open(argv[1], O_RDONLY);
 	if (fd > -1)
