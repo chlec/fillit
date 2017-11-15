@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:53:29 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/15 12:54:53 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/15 13:32:28 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 char	*ft_strcpy(char *dest, char *src);
 char	*ft_strcat(char *dest, char *src);
+int		ft_strcmp(const char *s1, const char *s2);
 typedef struct	s_tetrim
 {
 	char	**content;

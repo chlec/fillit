@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/16 11:50:28 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/15 13:07:13 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/15 14:09:52 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,58 @@ int		nb_words(char *str)
 	return (words);
 }
 
+void	move_tetrim_x(char	**tab)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 3;
+	while (j > 0)
+	{
+		if (!ft_strcmp(tab[j - 1], "...."))
+		{
+			while (tab[j][i])
+			{
+				if (tab[j][i] == '#')
+				{
+					tab[j - 1][i] = tab[j][i];
+					tab[j][i] = '.';
+				}
+				i++;
+			}
+			i = 0;
+		}
+		j--;
+	}
+}
+
+void	move_tetrim_y(char	**tab)
+{
+	int		i;
+	int		j;
+
+	i = 3;
+	j = 0;
+	while (i > 0)
+	{
+		if (tab[j][i - 1] ==  '.')
+		{
+			while (tab[j][i])
+			{
+				if (tab[j][i] == '#')
+				{
+					tab[j - 1][i] = tab[j][i];
+					tab[j][i] = '.';
+				}
+				i++;
+			}
+			i = 0;
+		}
+		j--;
+	}
+}
+
 t_list	*split_by_jumpline(char *str)
 {
 	t_list	*head;
@@ -80,7 +132,7 @@ t_list	*split_by_jumpline(char *str)
 	head = 0;
 	while (str[end])
 	{
-		if (str[end + 1] == '\n')
+		if (str[end + 1] == '\n' || str[end + 1] == '\0')
 		{
 			word = get_word(str, start, end);
 			if (word[0] != '\n' && word[0] != '\0' && str[end + 1] != '\0')
@@ -90,6 +142,8 @@ t_list	*split_by_jumpline(char *str)
 			else
 			{
 				tab[id] = 0;
+				move_tetrim_x(tab);
+				move_tetrim_y(tab);
 				content = ft_create_elem(tab, 0, 0);
 				ft_list_push_back(&head, content);
 				free(content);
