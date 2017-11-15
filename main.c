@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/15 13:34:16 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/15 16:29:36 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,26 @@ int		main(int argc, char **argv)
 	if (fd > -1)
 	{
 		content = get_file_content(fd);
-		list = split_by_jumpline(content);
-		i = 0;
-		while (list)
+		if (check_content(content))
 		{
-			aa = (t_tetrim*)(list->content);
-			while (aa->content[i])
-			{
-				printf("%s\n", aa->content[i]);
-				i++;
-			}
-			printf("\n");
+			list = split_by_jumpline(content);
 			i = 0;
-			list = list->next;
+			while (list)
+			{
+				aa = (t_tetrim*)(list->content);
+				while (aa->content[i])
+				{
+					printf("%s\n", aa->content[i]);
+					i++;
+				}
+				printf("\n");
+				i = 0;
+				list = list->next;
+			}
+			free(content);
+			close(fd);
 		}
-		free(content);
-		close(fd);
+		else
+			printf("error\n");
 	}
 }

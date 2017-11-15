@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/16 11:50:28 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/15 16:14:41 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/15 16:26:55 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,25 @@ int		nb_words(char *str)
 	return (words);
 }
 
+void	replace_diese(char **tab, char c)
+{
+	int		i;
+	int		j;
+
+	j = 0;
+	while (tab[j])
+	{
+		i = 0;
+		while (tab[j][i])
+		{
+			if (tab[j][i] == '#')
+				tab[j][i] = c;
+			i++;
+		}
+		j++;
+	}
+}
+
 void	move_tetrim_x(char	**tab)
 {
 	int		i;
@@ -71,7 +90,7 @@ void	move_tetrim_x(char	**tab)
 	{		
 		while (tab[j])
 		{
-			if (ft_strstr(tab[j], "#"))
+			if (ft_strcmp(tab[j], "....") != 0)
 			{
 				while (tab[j])
 				{
@@ -92,17 +111,16 @@ void	move_tetrim_y(char	**tab)
 	int		j;
 	int		y;
 
+	y = 0;
+	i = 1;
 	if (tab[0][0] == '.' && tab[1][0] == '.' && tab[2][0] == '.' && tab[3][0] == '.')
-	{
-		i = 1;
 		while (i < 4)
 		{
 			j = 0;
 			while (j < 4)
 			{
-				if (tab[j][i] == '#')
+				if (tab[j][i] != '.')
 				{
-					y = 0;
 					while (i < 4)
 					{
 						while (j < 4)
@@ -121,7 +139,6 @@ void	move_tetrim_y(char	**tab)
 			}
 			i++;
 		}
-	}
 }
 
 t_list	*split_by_jumpline(char *str)
@@ -134,6 +151,7 @@ t_list	*split_by_jumpline(char *str)
 	int		end;
 	int		id;
 	int		j;
+	char	c;
 
 	tab = (char**)malloc(sizeof(*tab) * (nb_words(str) + 1));
 	end = 0;
@@ -141,6 +159,7 @@ t_list	*split_by_jumpline(char *str)
 	id = 0;
 	content = 0;
 	head = 0;
+	c = 'A';
 	while (str[end])
 	{
 		if (str[end + 1] == '\n' || str[end + 1] == '\0')
@@ -153,8 +172,10 @@ t_list	*split_by_jumpline(char *str)
 			else
 			{
 				tab[id] = 0;
+				replace_diese(tab, c);
 				move_tetrim_x(tab);
 				move_tetrim_y(tab);
+				c++;
 				content = ft_create_elem(tab, 0, 0);
 				ft_list_push_back(&head, content);
 				free(content);
