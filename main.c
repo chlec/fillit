@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/15 16:29:36 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/15 17:45:12 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,26 @@ char	*get_file_content(int fd)
 	return (tab2);
 }
 
+int		chek(t_tetrim *aa, char **tab, int size)
+{
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+	while (x < size)
+	{
+		while (y < size)
+		{
+			if (aa->content[x][y] != '.' && tab[x][y] != '.')
+				return (0);
+			y++;
+		}
+		x++;
+	}
+	return (1);
+}
+
 int		main(int argc, char **argv)
 {
 	int		fd;
@@ -49,8 +69,19 @@ int		main(int argc, char **argv)
 	char	*content;
 	char	**tab;
 	int		x;
+	int 	y;
 	int		i;
-
+	
+	tab = (char**)malloc(sizeof(**tab) * 20);
+	while (x < 20)
+	{
+		while (j < 20)
+		{
+			tab[x][j] = '.';
+			j++;
+		}
+		i++;
+	}
 	fd = open(argv[1], O_RDONLY);
 	if (fd > -1)
 	{
