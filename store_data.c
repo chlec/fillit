@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/16 11:50:28 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/15 14:09:52 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/15 16:14:41 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,23 +66,23 @@ void	move_tetrim_x(char	**tab)
 	int		j;
 
 	i = 0;
-	j = 3;
-	while (j > 0)
-	{
-		if (!ft_strcmp(tab[j - 1], "...."))
+	j = 0;
+	if (!ft_strcmp(tab[0], "...."))
+	{		
+		while (tab[j])
 		{
-			while (tab[j][i])
+			if (ft_strstr(tab[j], "#"))
 			{
-				if (tab[j][i] == '#')
+				while (tab[j])
 				{
-					tab[j - 1][i] = tab[j][i];
-					tab[j][i] = '.';
+					tab[i] = ft_strdup(tab[j]);
+					tab[j] = ft_strdup("....");
+					i++;
+					j++;
 				}
-				i++;
 			}
-			i = 0;
+			j++;
 		}
-		j--;
 	}
 }
 
@@ -90,25 +90,37 @@ void	move_tetrim_y(char	**tab)
 {
 	int		i;
 	int		j;
+	int		y;
 
-	i = 3;
-	j = 0;
-	while (i > 0)
+	if (tab[0][0] == '.' && tab[1][0] == '.' && tab[2][0] == '.' && tab[3][0] == '.')
 	{
-		if (tab[j][i - 1] ==  '.')
+		i = 1;
+		while (i < 4)
 		{
-			while (tab[j][i])
+			j = 0;
+			while (j < 4)
 			{
 				if (tab[j][i] == '#')
 				{
-					tab[j - 1][i] = tab[j][i];
-					tab[j][i] = '.';
+					y = 0;
+					while (i < 4)
+					{
+						while (j < 4)
+						{
+							tab[j][y] = tab[j][i];
+							tab[j][i] = '.';
+							j++;
+						}
+						j = 0;
+						y++;
+						i++;
+					}
+					return ;
 				}
-				i++;
+				j++;
 			}
-			i = 0;
+			i++;
 		}
-		j--;
 	}
 }
 
@@ -122,7 +134,6 @@ t_list	*split_by_jumpline(char *str)
 	int		end;
 	int		id;
 	int		j;
-	int		e = 0;
 
 	tab = (char**)malloc(sizeof(*tab) * (nb_words(str) + 1));
 	end = 0;

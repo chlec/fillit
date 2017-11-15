@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:53:29 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/15 13:32:28 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/15 15:02:31 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <string.h>
 # define BUF_SIZE 20
 
-
+char	*ft_strstr(const char *haystack, const char *needle);
 char	*ft_strcpy(char *dest, char *src);
 char	*ft_strcat(char *dest, char *src);
 int		ft_strcmp(const char *s1, const char *s2);
