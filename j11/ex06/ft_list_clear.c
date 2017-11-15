@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_create_elem.c                                   :+:      :+:    :+:   */
+/*   ft_list_clear.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/15 10:18:31 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/15 13:01:13 by clecalie         ###   ########.fr       */
+/*   Created: 2017/09/18 10:43:36 by clecalie          #+#    #+#             */
+/*   Updated: 2017/09/18 16:46:19 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <stdlib.h>
+#include "ft_list.h"
 
-t_tetrim	*ft_create_elem(char **content, int x, int y)
+void	ft_list_clear(t_list **begin_list)
 {
-	t_tetrim	*list;
-	char		**c;
-	int			i;
+	t_list	*list;
+	t_list	*temp;
 
-	list = malloc(sizeof(t_tetrim));
-	c = (char**)malloc(sizeof(char*) * 21);
-	if (list)
+	list = *begin_list;
+	temp = 0;
+	while (list)
 	{
-		i = 0;
-		while (content[i])
+		temp = list;
+		if (list->next)
 		{
-			c[i] = ft_strdup(content[i]);
-			i++;
+			free(temp);
+			list = list->next;
 		}
-		list->content = c;
-		list->x = x;
-		list->y = y;
+		else
+			free(temp);
 	}
-	return (list);
+	*begin_list = NULL;
 }

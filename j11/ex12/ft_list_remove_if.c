@@ -1,36 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_create_elem.c                                   :+:      :+:    :+:   */
+/*   ft_list_remove_if.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/15 10:18:31 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/15 13:01:13 by clecalie         ###   ########.fr       */
+/*   Created: 2017/09/20 15:51:27 by clecalie          #+#    #+#             */
+/*   Updated: 2017/09/20 17:41:53 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include <stdlib.h>
+#include "ft_list.h"
 
-t_tetrim	*ft_create_elem(char **content, int x, int y)
+void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
 {
-	t_tetrim	*list;
-	char		**c;
-	int			i;
+	t_list	*list;
+	t_list	*after;
+	t_list	*before;
 
-	list = malloc(sizeof(t_tetrim));
-	c = (char**)malloc(sizeof(char*) * 21);
-	if (list)
+	list = *begin_list;
+	before = *begin_list;
+	while (list)
 	{
-		i = 0;
-		while (content[i])
+		if ((*cmp)(list->data, data_ref) == 0)
 		{
-			c[i] = ft_strdup(content[i]);
-			i++;
+			after = list->next;
+			free(list);
+			before->next = after;
+			list = after;
 		}
-		list->content = c;
-		list->x = x;
-		list->y = y;
+		else
+			list = list->next;
 	}
-	return (list);
 }

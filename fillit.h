@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:53:29 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/14 16:53:36 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/15 12:54:53 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,5 @@ t_list	*ft_lstnew(void const *content, size_t content_size);
 void			ft_lstadd(t_list **alst, t_list *new);
 t_list	*split_by_jumpline(char *str);
 char			*ft_strdup(const char *s1);
+void	ft_list_push_back(t_list **begin_list, void *data);
 #endif

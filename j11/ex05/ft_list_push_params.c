@@ -1,36 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_create_elem.c                                   :+:      :+:    :+:   */
+/*   ft_list_push_params.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/15 10:18:31 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/15 13:01:13 by clecalie         ###   ########.fr       */
+/*   Created: 2017/09/18 10:08:44 by clecalie          #+#    #+#             */
+/*   Updated: 2017/09/21 12:53:14 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include "ft_list.h"
 
-t_tetrim	*ft_create_elem(char **content, int x, int y)
+void	ft_list_push_front(t_list **begin_list, void *data)
 {
-	t_tetrim	*list;
-	char		**c;
-	int			i;
+	t_list	*list;
 
-	list = malloc(sizeof(t_tetrim));
-	c = (char**)malloc(sizeof(char*) * 21);
-	if (list)
+	list = ft_create_elem(data);
+	list->next = *begin_list;
+	*begin_list = list;
+}
+
+t_list	*ft_list_push_params(int ac, char **av)
+{
+	int		i;
+	t_list	*list;
+
+	(void)ac;
+	list = NULL;
+	i = 1;
+	while (av[i])
 	{
-		i = 0;
-		while (content[i])
-		{
-			c[i] = ft_strdup(content[i]);
-			i++;
-		}
-		list->content = c;
-		list->x = x;
-		list->y = y;
+		ft_list_push_front(&list, av[i]);
+		i++;
 	}
 	return (list);
 }
