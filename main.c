@@ -47,15 +47,21 @@ int		chek(t_tetrim *aa, char **tab, int size)
 	int y;
 
 	x = 0;
-	y = 0;
 	while (x < size)
 	{
+		y = 0;
 		while (y < size)
 		{
-			if (aa->content[x][y] != '.' && tab[x][y] != '.')
-				return (0);
+			if (x < 4 && y < 4)
+		//	if ((aa->content[x][y] != '.' && tab[x][y] != '.') || aa->content[x][y] == '.' )
+		//	{
+				tab[x][y] = aa->content[x][y];
+				//return (0);
+		//	}
+			printf("%c ", tab[x][y]);
 			y++;
 		}
+		printf("\n");
 		x++;
 	}
 	return (1);
@@ -69,16 +75,18 @@ int		main(int argc, char **argv)
 	char	*content;
 	char	**tab;
 	int		x;
-	int 	y;
+	int 		y;
 	int		i;
 	int		j;
-	j = 0;
+
 	x = 0;
-	
-	tab = (char**)malloc(sizeof(**tab) * 20);
+	if (!(tab = (char**)malloc(sizeof(**tab) * 200)))
+		return (0);
 	while (x < 20)
 	{
-		tab[x] = (char*)malloc(sizeof(char) * 20);
+		j = 0;
+		if (!(tab[x] = (char*)malloc(sizeof(char) * 200)))
+			return (0);
 		while (j < 20)
 		{
 
@@ -95,7 +103,8 @@ int		main(int argc, char **argv)
 		{
 			list = split_by_jumpline(content);
 			i = 0;
-			while (list)
+			y = chek((t_tetrim*)(list->content), tab, 10);
+			/*while (list)
 			{
 				aa = (t_tetrim*)(list->content);
 				while (aa->content[i])
@@ -106,7 +115,7 @@ int		main(int argc, char **argv)
 				printf("\n");
 				i = 0;
 				list = list->next;
-			}
+			}*/
 			free(content);
 			close(fd);
 		}
