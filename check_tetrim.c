@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 16:28:19 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/16 11:38:02 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/16 12:40:07 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,28 @@
 int		check_together(char *str)
 {
 	int		i;
+	int		count;
 
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == '#' && ((str[i + 1] && str[i + 1] == '#')
+					|| (i > 0 && str[i - 1] == '#')
+					|| (i > 4 && str[i - 5] == '#')
+					|| (i + 5 < ft_strlen(str) && str[i + 5] == '#')))
+		{
+			count++; 
+		}
+		if (str[i] == '\n' && str[i + 1] == '\n')
+		{
+			if (count != 4)
+				return (0);
+			count = 0;
+		}
+		i++;
+	}
+	return (1);
 }
 
 int		check_square(char *str)
@@ -80,7 +101,7 @@ int		check_charac(char *str)
 
 int		check_content(char *str)
 {
-	if (check_charac(str) && check_jumpline(str) && check_square(str))
+	if (check_charac(str) && check_jumpline(str) && check_square(str) && check_together(str))
 		return (1);
 	return (0);
 }
