@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/16 14:47:35 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/16 15:30:00 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,11 @@ void	add_tetrim(t_tetrim *aa, char **tab, int size)
 	while (a < size)
 	{
 		y = 0;
-		b = 0;
+		b = aa->y;
 		while (b < size)
 		{
 			if (x < 4 && y < 4 && aa->content[x][y] != '.')
 			{
-			//	printf("on ajoute %c\n", aa->content[x][y]);
 				tab[a][b] = aa->content[x][y];
 			}
 			b++;
@@ -87,9 +86,10 @@ int		chek(t_tetrim *aa, char **tab, int size)
 	while (a < size)
 	{
 		y = 0;
-		b = 0;
+		b = aa->y;
 		while (b < size)
 		{
+			//printf("check case: a: %d, b: %d\n", a, b);
 			if (x < 4 && y < 4 && aa->content[x][y] != '.' && tab[a][b] != '.')
 				erreur = 0;
 			b++;
@@ -141,17 +141,16 @@ int		main(int argc, char **argv)
 				aa = (t_tetrim*)(list->content);
 				//aa->x = 2;
 				//y = chek(aa, tab, 10);
-				while (!(y = chek(aa, tab, 10)))
+				while (!(y = chek(aa, tab, 10)) && aa->x < 9)
 				{
-					aa->y = aa->y + 1;
-					if (aa->y == 4)
+					aa->y++;
+					if (aa->y >= 9)
 					{
-						aa->x = aa->x + 1;
+						aa->x++;
 						aa->y = 0;
 					}
-	//				printf("(%d %d)\n", aa->x, aa->y);
+				//	printf("(%d %d)\n", aa->x, aa->y);
 				}
-	//			printf("%d\n", y);
 				if (y)
 					add_tetrim(aa, tab, 10);
 				list = list->next;
@@ -167,19 +166,7 @@ int		main(int argc, char **argv)
 				}
 				ft_putchar('\n');
 				j++;
-			}
-			/*while (list)
-			{
-				aa = (t_tetrim*)(list->content);
-				while (aa->content[i])
-				{
-					printf("%s\n", aa->content[i]);
-					i++;
-				}
-				printf("\n");
-				i = 0;
-				list = list->next;
-			}*/
+			}	
 			free(content);
 			close(fd);
 		}
