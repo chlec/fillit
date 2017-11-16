@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/16 11:16:19 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/16 11:37:54 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,12 @@ int		main(int argc, char **argv)
 		{
 			list = split_by_jumpline(content);
 			i = 0;
-			while (list)
+			/*while (list)
 			{
 				y = chek((t_tetrim*)(list->content), tab, 10);
 				list = list->next;
-			}
-			/*while (list)
+			}*/
+			while (list)
 			{
 				aa = (t_tetrim*)(list->content);
 				while (aa->content[i])
@@ -130,7 +130,7 @@ int		main(int argc, char **argv)
 				printf("\n");
 				i = 0;
 				list = list->next;
-			}*/
+			}
 			free(content);
 			close(fd);
 		}

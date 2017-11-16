@@ -6,13 +6,17 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 16:28:19 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/16 11:30:00 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/16 11:38:02 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		check_true
+int		check_together(char *str)
+{
+	int		i;
+
+}
 
 int		check_square(char *str)
 {
