@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/15 17:45:12 by mdaunois         ###   ########.fr       */
+/*   Updated: 2017/11/16 10:36:04 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,19 @@ int		chek(t_tetrim *aa, char **tab, int size)
 		y = 0;
 		while (y < size)
 		{
-			if (x < 4 && y < 4)
+			if (x < 4 && y < 4 && aa->content[x][y] != '.')
+			{
+				tab[x][y] = aa->content[x][y];
+			}
+			ft_putchar(tab[x][y]);
+			y++;
 		//	if ((aa->content[x][y] != '.' && tab[x][y] != '.') || aa->content[x][y] == '.' )
 		//	{
-				tab[x][y] = aa->content[x][y];
 				//return (0);
 		//	}
-			printf("%c ", tab[x][y]);
-			y++;
+			//printf("%c", tab[x][y]);
 		}
-		printf("\n");
+		ft_putchar('\n');
 		x++;
 	}
 	return (1);
@@ -75,19 +78,19 @@ int		main(int argc, char **argv)
 	char	*content;
 	char	**tab;
 	int		x;
-	int 		y;
+	int 	y;
 	int		i;
 	int		j;
 
 	x = 0;
 	if (!(tab = (char**)malloc(sizeof(**tab) * 200)))
 		return (0);
-	while (x < 20)
+	while (x < 10)
 	{
 		j = 0;
 		if (!(tab[x] = (char*)malloc(sizeof(char) * 200)))
 			return (0);
-		while (j < 20)
+		while (j < 10)
 		{
 
 			tab[x][j] = '.';
@@ -103,7 +106,11 @@ int		main(int argc, char **argv)
 		{
 			list = split_by_jumpline(content);
 			i = 0;
-			y = chek((t_tetrim*)(list->content), tab, 10);
+			while (list)
+			{
+				y = chek((t_tetrim*)(list->content), tab, 10);
+				list = list->next;
+			}
 			/*while (list)
 			{
 				aa = (t_tetrim*)(list->content);

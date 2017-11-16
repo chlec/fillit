@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:53:29 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/15 16:52:32 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/16 09:58:03 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,5 @@ t_list	*split_by_jumpline(char *str);
 char			*ft_strdup(const char *s1);
 void	ft_list_push_back(t_list **begin_list, void *data);
 int		check_content(char *str);
+void	ft_putchar(char c);
 #endif

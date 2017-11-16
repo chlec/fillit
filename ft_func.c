@@ -6,25 +6,25 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/18 09:46:48 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/13 15:10:30 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/16 09:58:49 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void	ft_putchar(int fd, char c)
+void	ft_putchar(char c)
 {
-	write(fd, &c, 1);
+	write(1, &c, 1);
 }
 
-void	ft_putstr(int fd, char *str)
+void	ft_putstr(char *str)
 {
 	int		i;
 
 	i = 0;
 	while (str[i])
 	{
-		ft_putchar(fd, str[i]);
+		ft_putchar(str[i]);
 		i++;
 	}
 }
