@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/16 14:08:51 by mdaunois         ###   ########.fr       */
+/*   Updated: 2017/11/16 14:27:40 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	add_tetrim(t_tetrim *aa, char **tab, int size)
 		b = 0;
 		while (y < size)
 		{
-			if (a < aa->x + 4 && b < aa->y + 4 && aa->content[a][b] != '.')
+			if (a < 4 && b < 4 && aa->content[a][b] != '.')
 			{
 				tab[x][y] = aa->content[a][b];
 			}
@@ -85,14 +85,14 @@ int		chek(t_tetrim *aa, char **tab, int size)
 	b = aa->y;
 	x = 0;
 	erreur = 1;
-	printf("(a = %d)\t", a);
+	printf("(a = %d)\n", a);
 	while (x < size)
 	{
 		y = 0;
 		b = 0;
 		while (y < size)
 		{
-			if (a < aa->x + 4 && b < aa->y + 4 && aa->content[a][b] != '.' && tab[x][y] != '.')
+			if (a < 4 && b < 4 && aa->content[a][b] != '.' && tab[a][b] != '.')
 				erreur = 0;
 			b++;
 			y++;
@@ -100,6 +100,7 @@ int		chek(t_tetrim *aa, char **tab, int size)
 		a++;
 		x++;
 	}
+	printf("LALA\n");
 	return (erreur);
 }
 
