@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/16 15:47:34 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/16 16:03:04 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	add_tetrim(t_tetrim *aa, char **tab, int size)
 	int b;
 	
 	a = aa->x;
-	b = aa->y;
 	x = 0;
 	while (a < size)
 	{
@@ -64,7 +63,6 @@ void	add_tetrim(t_tetrim *aa, char **tab, int size)
 			b++;
 			y++;
 		}
-	//	aa->y = 0;
 		a++;
 		x++;
 	}
@@ -77,23 +75,20 @@ int		chek(t_tetrim *aa, char **tab, int size)
 	int y;
 	int a;
 	int b;
-	
+
 	a = aa->x;
 	x = 0;
-	while (a < size)
+	while (a <= size)
 	{
 		y = 0;
 		b = aa->y;
-		while (b < size)
-		{
-			printf("check case: a: %d, b: %d\n", a, b);
-			//printf("tab[a][b]: %c\n", tab[a][b]);
+		while (b <= size)
+		{	
 			if (x < 4 && y < 4 && aa->content[x][y] != '.' && tab[a][b] != '.')
 				return (0);
 			b++;
 			y++;
 		}
-	//	aa->y = 0;
 		a++;
 		x++;
 	}
@@ -111,16 +106,17 @@ int		main(int argc, char **argv)
 	int 	good;
 	int		i;
 	int		j;
+	int size = 8;
 
 	x = 0;
 	if (!(tab = (char**)malloc(sizeof(**tab) * 200)))
 		return (0);
-	while (x < 10)
+	while (x < size)
 	{
 		j = 0;
 		if (!(tab[x] = (char*)malloc(sizeof(char) * 200)))
 			return (0);
-		while (j < 10)
+		while (j < size)
 		{
 
 			tab[x][j] = '.';
@@ -138,18 +134,18 @@ int		main(int argc, char **argv)
 			while (list)
 			{
 				aa = (t_tetrim*)(list->content);
-				while (!(good = chek(aa, tab, 10)) && aa->x < 9)
+				while (!(good = chek(aa, tab, size))) //&& aa->x < size - 1)
 				{
 					aa->y++;
-					if (aa->y == 9)
+					if (aa->y == size - 1)
 					{
 						aa->x++;
 						aa->y = 0;
-					}
+					}	
 				//	printf("(%d %d)\n", aa->x, aa->y);
 				}
 				if (good)
-					add_tetrim(aa, tab, 10);
+					add_tetrim(aa, tab, size);
 				list = list->next;
 			}
 			j = 0;
