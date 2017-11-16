@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/16 15:30:00 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/16 15:47:34 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	add_tetrim(t_tetrim *aa, char **tab, int size)
 			b++;
 			y++;
 		}
+	//	aa->y = 0;
 		a++;
 		x++;
 	}
@@ -76,29 +77,27 @@ int		chek(t_tetrim *aa, char **tab, int size)
 	int y;
 	int a;
 	int b;
-	int erreur;
 	
 	a = aa->x;
-	b = aa->y;
 	x = 0;
-	erreur = 1;
-	//printf("(a = %d)\n", a);
 	while (a < size)
 	{
 		y = 0;
 		b = aa->y;
 		while (b < size)
 		{
-			//printf("check case: a: %d, b: %d\n", a, b);
+			printf("check case: a: %d, b: %d\n", a, b);
+			//printf("tab[a][b]: %c\n", tab[a][b]);
 			if (x < 4 && y < 4 && aa->content[x][y] != '.' && tab[a][b] != '.')
-				erreur = 0;
+				return (0);
 			b++;
 			y++;
 		}
+	//	aa->y = 0;
 		a++;
 		x++;
 	}
-	return (erreur);
+	return (1);
 }
 
 int		main(int argc, char **argv)
@@ -109,7 +108,7 @@ int		main(int argc, char **argv)
 	char	*content;
 	char	**tab;
 	int		x;
-	int 	y;
+	int 	good;
 	int		i;
 	int		j;
 
@@ -139,19 +138,17 @@ int		main(int argc, char **argv)
 			while (list)
 			{
 				aa = (t_tetrim*)(list->content);
-				//aa->x = 2;
-				//y = chek(aa, tab, 10);
-				while (!(y = chek(aa, tab, 10)) && aa->x < 9)
+				while (!(good = chek(aa, tab, 10)) && aa->x < 9)
 				{
 					aa->y++;
-					if (aa->y >= 9)
+					if (aa->y == 9)
 					{
 						aa->x++;
 						aa->y = 0;
 					}
 				//	printf("(%d %d)\n", aa->x, aa->y);
 				}
-				if (y)
+				if (good)
 					add_tetrim(aa, tab, 10);
 				list = list->next;
 			}
