@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/16 10:36:04 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/16 11:16:19 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,26 @@ int		chek(t_tetrim *aa, char **tab, int size)
 {
 	int x;
 	int y;
+	int	a;
+	int	b;
 
 	x = 0;
+	a = 0;
 	while (x < size)
 	{
 		y = 0;
+		b = 0;
 		while (y < size)
 		{
-			if (x < 4 && y < 4 && aa->content[x][y] != '.')
+			if (a < 4 && b < 4 && aa->content[a][b] != '.')
 			{
-				tab[x][y] = aa->content[x][y];
+				while (tab[x][y] != '.')
+					y++;
+				tab[x][y] = aa->content[a][b];
 			}
 			ft_putchar(tab[x][y]);
 			y++;
+			b++;
 		//	if ((aa->content[x][y] != '.' && tab[x][y] != '.') || aa->content[x][y] == '.' )
 		//	{
 				//return (0);
@@ -66,6 +73,7 @@ int		chek(t_tetrim *aa, char **tab, int size)
 		}
 		ft_putchar('\n');
 		x++;
+		a++;
 	}
 	return (1);
 }

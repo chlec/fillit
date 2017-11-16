@@ -6,11 +6,13 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 16:28:19 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/15 17:44:37 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/16 11:30:00 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+int		check_true
 
 int		check_square(char *str)
 {
@@ -26,7 +28,6 @@ int		check_square(char *str)
 		{
 			if (j != 5 && j != 1)
 			{
-				printf("j: %d\n", j);
 				return (0);
 			}
 			j = 0;
