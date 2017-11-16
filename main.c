@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/16 11:37:54 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/16 12:37:00 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,37 +45,35 @@ int		chek(t_tetrim *aa, char **tab, int size)
 {
 	int x;
 	int y;
-	int	a;
-	int	b;
-
+	int a;
+	int b;
+	int erreur;
+	
+	a = aa->x;
+	b = aa->y;
 	x = 0;
-	a = 0;
+	erreur = 0;
 	while (x < size)
 	{
 		y = 0;
 		b = 0;
 		while (y < size)
 		{
-			if (a < 4 && b < 4 && aa->content[a][b] != '.')
+			if (a < aa->x + 4 && b < aa->y + 4 && aa->content[a][b] != '.' && tab[x][y] == '.')
 			{
-				while (tab[x][y] != '.')
-					y++;
 				tab[x][y] = aa->content[a][b];
+				erreur = 1;
 			}
 			ft_putchar(tab[x][y]);
-			y++;
 			b++;
-		//	if ((aa->content[x][y] != '.' && tab[x][y] != '.') || aa->content[x][y] == '.' )
-		//	{
-				//return (0);
-		//	}
-			//printf("%c", tab[x][y]);
+			y++;
 		}
 		ft_putchar('\n');
-		x++;
 		a++;
+		x++;
 	}
-	return (1);
+	ft_putchar('\n');
+	return (erreur);
 }
 
 int		main(int argc, char **argv)
@@ -114,12 +112,13 @@ int		main(int argc, char **argv)
 		{
 			list = split_by_jumpline(content);
 			i = 0;
-			/*while (list)
+			while (list)
 			{
 				y = chek((t_tetrim*)(list->content), tab, 10);
+				printf("%d\n", y);
 				list = list->next;
-			}*/
-			while (list)
+			}
+			/*while (list)
 			{
 				aa = (t_tetrim*)(list->content);
 				while (aa->content[i])
@@ -130,7 +129,7 @@ int		main(int argc, char **argv)
 				printf("\n");
 				i = 0;
 				list = list->next;
-			}
+			}*/
 			free(content);
 			close(fd);
 		}
