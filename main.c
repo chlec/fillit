@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/16 16:03:04 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/16 16:22:56 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,10 +134,10 @@ int		main(int argc, char **argv)
 			while (list)
 			{
 				aa = (t_tetrim*)(list->content);
-				while (!(good = chek(aa, tab, size))) //&& aa->x < size - 1)
+				while (!(good = chek(aa, tab, size)))// || aa->x == size - 1)
 				{
 					aa->y++;
-					if (aa->y == size - 1)
+					if (aa->y == size)
 					{
 						aa->x++;
 						aa->y = 0;
@@ -146,6 +146,8 @@ int		main(int argc, char **argv)
 				}
 				if (good)
 					add_tetrim(aa, tab, size);
+				else
+					printf("pas possible\n");
 				list = list->next;
 			}
 			j = 0;
