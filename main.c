@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/16 14:27:40 by mdaunois         ###   ########.fr       */
+/*   Updated: 2017/11/16 14:47:35 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,23 @@ void	add_tetrim(t_tetrim *aa, char **tab, int size)
 	a = aa->x;
 	b = aa->y;
 	x = 0;
-	while (x < size)
+	while (a < size)
 	{
 		y = 0;
 		b = 0;
-		while (y < size)
+		while (b < size)
 		{
-			if (a < 4 && b < 4 && aa->content[a][b] != '.')
+			if (x < 4 && y < 4 && aa->content[x][y] != '.')
 			{
-				tab[x][y] = aa->content[a][b];
+			//	printf("on ajoute %c\n", aa->content[x][y]);
+				tab[a][b] = aa->content[x][y];
 			}
-			ft_putchar(tab[x][y]);
 			b++;
 			y++;
 		}
-		ft_putchar('\n');
 		a++;
 		x++;
 	}
-	ft_putchar('\n');
 }
 
 
@@ -85,14 +83,14 @@ int		chek(t_tetrim *aa, char **tab, int size)
 	b = aa->y;
 	x = 0;
 	erreur = 1;
-	printf("(a = %d)\n", a);
-	while (x < size)
+	//printf("(a = %d)\n", a);
+	while (a < size)
 	{
 		y = 0;
 		b = 0;
-		while (y < size)
+		while (b < size)
 		{
-			if (a < 4 && b < 4 && aa->content[a][b] != '.' && tab[a][b] != '.')
+			if (x < 4 && y < 4 && aa->content[x][y] != '.' && tab[a][b] != '.')
 				erreur = 0;
 			b++;
 			y++;
@@ -100,7 +98,6 @@ int		chek(t_tetrim *aa, char **tab, int size)
 		a++;
 		x++;
 	}
-	printf("LALA\n");
 	return (erreur);
 }
 
@@ -139,7 +136,6 @@ int		main(int argc, char **argv)
 		if (check_content(content))
 		{
 			list = split_by_jumpline(content);
-			i = 0;
 			while (list)
 			{
 				aa = (t_tetrim*)(list->content);
@@ -147,14 +143,30 @@ int		main(int argc, char **argv)
 				//y = chek(aa, tab, 10);
 				while (!(y = chek(aa, tab, 10)))
 				{
-					aa->x = aa->x + 1;
 					aa->y = aa->y + 1;
-					printf("(%d %d)\n", aa->x, aa->y);
+					if (aa->y == 4)
+					{
+						aa->x = aa->x + 1;
+						aa->y = 0;
+					}
+	//				printf("(%d %d)\n", aa->x, aa->y);
 				}
-				printf("%d\n", y);
+	//			printf("%d\n", y);
 				if (y)
 					add_tetrim(aa, tab, 10);
 				list = list->next;
+			}
+			j = 0;
+			while (tab[j])
+			{
+				i = 0;
+				while (tab[j][i])
+				{
+					ft_putchar(tab[j][i]);
+					i++;
+				}
+				ft_putchar('\n');
+				j++;
 			}
 			/*while (list)
 			{
