@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/16 16:22:56 by mdaunois         ###   ########.fr       */
+/*   Updated: 2017/11/17 12:57:28 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void	add_tetrim(t_tetrim *aa, char **tab, int size)
 	
 	a = aa->x;
 	x = 0;
-	while (a < size)
+	while (a <= size)
 	{
 		y = 0;
 		b = aa->y;
-		while (b < size)
+		while (b <= size)
 		{
 			if (x < 4 && y < 4 && aa->content[x][y] != '.')
 			{
@@ -106,24 +106,26 @@ int		main(int argc, char **argv)
 	int 	good;
 	int		i;
 	int		j;
-	int size = 8;
+	int size = 5;
 
 	x = 0;
-	if (!(tab = (char**)malloc(sizeof(**tab) * 200)))
+	if (!(tab = (char**)malloc(sizeof(**tab) * size + 1)))
 		return (0);
 	while (x < size)
 	{
 		j = 0;
-		if (!(tab[x] = (char*)malloc(sizeof(char) * 200)))
+		if (!(tab[x] = (char*)malloc(sizeof(*tab) * size + 1)))
 			return (0);
 		while (j < size)
 		{
-
 			tab[x][j] = '.';
 			j++;
 		}
+		tab[x][j] = '\0';
 		x++;
 	}
+	tab[x] = NULL;
+	printf("FIN INIT\n");
 	fd = open(argv[1], O_RDONLY);
 	if (fd > -1)
 	{
@@ -131,26 +133,29 @@ int		main(int argc, char **argv)
 		if (check_content(content))
 		{
 			list = split_by_jumpline(content);
+			printf("LIST INIT\n");
 			while (list)
 			{
 				aa = (t_tetrim*)(list->content);
-				while (!(good = chek(aa, tab, size)))// || aa->x == size - 1)
+				while ((!(good = chek(aa, tab, size))) && aa->x < size - 2) // pour le deuxieme argument, il faut mettre la hauteur de la 
+																			// piece pour qu'il s'arret au bon moment
 				{
 					aa->y++;
-					if (aa->y == size)
+					if (aa->y == size) // a mon avis c'est pareil ici = size - longeur de la piece
 					{
 						aa->x++;
 						aa->y = 0;
 					}	
-				//	printf("(%d %d)\n", aa->x, aa->y);
 				}
+				printf("FIN CHEK %d\n", good);
 				if (good)
 					add_tetrim(aa, tab, size);
 				else
 					printf("pas possible\n");
 				list = list->next;
 			}
-			j = 0;
+			printf("FIN REMPLIR TAB\n");
+			j = 1;
 			while (tab[j])
 			{
 				i = 0;
@@ -159,9 +164,11 @@ int		main(int argc, char **argv)
 					ft_putchar(tab[j][i]);
 					i++;
 				}
+				free(tab[j]);
 				ft_putchar('\n');
 				j++;
-			}	
+			}
+			free(tab);	
 			free(content);
 			close(fd);
 		}
