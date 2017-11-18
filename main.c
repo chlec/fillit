@@ -12,6 +12,32 @@
 
 #include "fillit.h"
 
+char	**create_tab(int size)
+{
+	char	**tab;
+	int		x;
+	int		j;
+
+	x = 0;
+	if (!(tab = (char**)malloc(sizeof(char*) * (size + 1))))
+		return (0);
+	while (x < size)
+	{
+		j = 0;
+		if (!(tab[x] = (char*)malloc(sizeof(char) * (size + 1))))
+			return (0);
+		while (j < size)
+		{
+			tab[x][j] = '.';
+			j++;
+		}
+		tab[x][j] = '\0';
+		x++;
+	}
+	tab[x] = 0;
+	return (tab);
+}
+
 void	print_tab(char **tab)
 {
 	int		i;
@@ -27,6 +53,20 @@ void	print_tab(char **tab)
 		}
 		i++;
 		ft_putchar('\n');
+	}
+}
+
+void	reset(t_list **list)
+{
+	t_list	*head;
+	t_tetrim *aa;
+
+	head = *list;
+	while (head) {
+		aa = (t_tetrim*)(head->content);
+		aa->y = 0;
+		aa->x = 0;
+		head = head->next;
 	}
 }
 
@@ -65,11 +105,9 @@ void	add_tetrim(t_tetrim *aa, char **tab, int size)
 	int y;
 	int a;
 	int b;
-	int	c;
 	
 	a = aa->x;
 	x = 0;
-	c = 0;
 	while (a <= size)
 	{
 		y = 0;
@@ -78,12 +116,9 @@ void	add_tetrim(t_tetrim *aa, char **tab, int size)
 		{
 			if (x < 4 && y < 4 && aa->content[x][y] != '.' && tab[a][b] == '.')
 			{
-				printf("tab[a][b]: x: %d, y: %d, a: %d, b: %d\n", x, y, a, b);
+				//printf("tab[a][b]: x: %d, y: %d, a: %d, b: %d\n", x, y, a, b);
 				tab[a][b] = aa->content[x][y];
-				c++;
 			}
-			if (c == 4)
-				return ;
 			b++;
 			y++;
 		}
@@ -99,16 +134,16 @@ int		chek(t_tetrim *aa, char **tab, int size)
 	int y;
 	int a;
 	int b;
+
 	a = aa->x;
 	x = 0;
-
 	while (a <= size)
 	{
 		y = 0;
 		b = aa->y;
 		while (b <= size)
 		{
-			printf("%c: x%d y%d a%d b%d\n", aa->letter, x,y,a,b);
+			printf("Check %c: x%d y%d a%d b%d\n", aa->letter, x,y,a,b);
 			if (x < 4 && y < 4 && aa->content[x][y] != '.' && tab[a][b] != '.')
 				return (0);
 			b++;
@@ -118,32 +153,6 @@ int		chek(t_tetrim *aa, char **tab, int size)
 		x++;
 	}
 	return (1);
-}
-
-char	**create_tab(int size)
-{
-	char	**tab;
-	int		x;
-	int		j;
-
-	x = 0;
-	if (!(tab = (char**)malloc(sizeof(**tab) * (size + 1))))
-		return (0);
-	while (x < size)
-	{
-		j = 0;
-		if (!(tab[x] = (char*)malloc(sizeof(*tab) * (size + 1))))
-			return (0);
-		while (j < size)
-		{
-			tab[x][j] = '.';
-			j++;
-		}
-		tab[x][j] = '\0';
-		x++;
-	}
-	tab[x] = NULL;
-	return (tab);
 }
 
 char	**put_content(t_list **list, int size)
@@ -158,10 +167,11 @@ char	**put_content(t_list **list, int size)
 	tab = create_tab(size);
 	while (head)
 	{
+		good = 0;
 		aa = (t_tetrim*)(head->content);
-		printf("Trying: %c %d %d\n", aa->letter, aa->x, aa->y);
+		//printf("Trying: %c %d %d\n", aa->letter, aa->x, aa->y);
 		print_tab(tab);
-		while ((!(good = chek(aa, tab, size))) && aa->x < size - 1) // pour le deuxieme argument, il faut mettre la hauteur de la 
+		while (aa->x < size - 1 && (!(good = chek(aa, tab, size)))) // pour le deuxieme argument, il faut mettre la hauteur de la 
 																	// piece pour qu'il s'arret au bon moment
 		{
 			aa->y++;
@@ -180,14 +190,12 @@ char	**put_content(t_list **list, int size)
 		else
 		{
 			printf("pas possible: %c\n", aa->letter);
-			//reset(list);
 			i = 0;
 			while (i < size)
-				free(tab[i++]);
+				ft_strdel(&tab[i++]);
+			free(tab);
 			tab = NULL;
-			//return (tab);
-			aa->y = 0;
-			aa->x = 0;
+			reset(list);
 			return (put_content(list, size + 1));
 		}
 	}
@@ -202,7 +210,7 @@ int		main(int argc, char **argv)
 	char	**tab;
 	int size;
 
-	size = 5;	
+	size = 4;	
 	fd = open(argv[1], O_RDONLY);
 	if (fd > -1)
 	{
@@ -211,7 +219,7 @@ int		main(int argc, char **argv)
 		{
 			list = split_by_jumpline(content);
 			tab = put_content(&list, size);
-			//print_tab(tab);
+			print_tab(tab);
 			//free(tab);	
 			free(content);
 			close(fd);
