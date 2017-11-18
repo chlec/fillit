@@ -150,7 +150,6 @@ t_list	*split_by_jumpline(char *str)
 	int		start;
 	int		end;
 	int		id;
-	int		j;
 	char	c;
 
 	tab = (char**)malloc(sizeof(*tab) * (nb_words(str) + 1));
@@ -175,8 +174,8 @@ t_list	*split_by_jumpline(char *str)
 				replace_diese(tab, c);
 				move_tetrim_x(tab);
 				move_tetrim_y(tab);
+				content = ft_create_elem(tab, 0, 0, c);
 				c++;
-				content = ft_create_elem(tab, 0, 0);
 				ft_list_push_back(&head, content);
 				free(content);
 				free(tab);

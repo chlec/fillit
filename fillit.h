@@ -28,8 +28,9 @@ typedef struct	s_tetrim
 	char	**content;
 	int		x;
 	int		y;
+	char	letter;
 }				t_tetrim;
-t_tetrim *ft_create_elem(char **content, int x, int y);
+t_tetrim *ft_create_elem(char **content, int x, int y, char letter);
 
 typedef struct	s_list
 {

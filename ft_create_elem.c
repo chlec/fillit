@@ -12,7 +12,7 @@
 
 #include "fillit.h"
 
-t_tetrim	*ft_create_elem(char **content, int x, int y)
+t_tetrim	*ft_create_elem(char **content, int x, int y, char letter)
 {
 	t_tetrim	*list;
 	char		**c;
@@ -31,6 +31,7 @@ t_tetrim	*ft_create_elem(char **content, int x, int y)
 		list->content = c;
 		list->x = x;
 		list->y = y;
+		list->letter = letter;
 	}
 	return (list);
 }
