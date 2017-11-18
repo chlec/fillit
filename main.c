@@ -115,10 +115,7 @@ void	add_tetrim(t_tetrim *aa, char **tab, int size)
 		while (b <= size)
 		{
 			if (x < 4 && y < 4 && aa->content[x][y] != '.' && tab[a][b] == '.')
-			{
-				//printf("tab[a][b]: x: %d, y: %d, a: %d, b: %d\n", x, y, a, b);
 				tab[a][b] = aa->content[x][y];
-			}
 			b++;
 			y++;
 		}
@@ -143,7 +140,7 @@ int		chek(t_tetrim *aa, char **tab, int size)
 		b = aa->y;
 		while (b <= size)
 		{
-			printf("Check %c: x%d y%d a%d b%d\n", aa->letter, x,y,a,b);
+			//printf("Check %c: x%d y%d a%d b%d\n", aa->letter, x,y,a,b);
 			if (x < 4 && y < 4 && aa->content[x][y] != '.' && tab[a][b] != '.')
 				return (0);
 			b++;
@@ -170,12 +167,11 @@ char	**put_content(t_list **list, int size)
 		good = 0;
 		aa = (t_tetrim*)(head->content);
 		//printf("Trying: %c %d %d\n", aa->letter, aa->x, aa->y);
-		print_tab(tab);
-		while (aa->x < size - 1 && (!(good = chek(aa, tab, size)))) // pour le deuxieme argument, il faut mettre la hauteur de la 
-																	// piece pour qu'il s'arret au bon moment
+		while (aa->x < size - get_height(aa) && (!(good = chek(aa, tab, size)))) // pour le deuxieme argument, il faut mettre la hauteur de la 
+																	// piece pour qu'il s'arret au bon moment - OK
 		{
 			aa->y++;
-			if (aa->y == size) // a mon avis c'est pareil ici = size - longeur de la piece
+			if (aa->y > size - get_width(aa)) // a mon avis c'est pareil ici = size - longeur de la piece - OK
 			{
 				aa->x++;
 				aa->y = 0;
@@ -183,20 +179,20 @@ char	**put_content(t_list **list, int size)
 		}
 		if (good)
 		{
-			printf("sa pose %c, x: %d, y: %d\n", aa->letter, aa->x, aa->y);
+			//printf("sa pose %c, x: %d, y: %d\n", aa->letter, aa->x, aa->y);
 			add_tetrim(aa, tab, size);
 			head = head->next;
 		}
 		else
 		{
-			printf("pas possible: %c\n", aa->letter);
+			//printf("pas possible: %c\n", aa->letter);
 			i = 0;
 			while (i < size)
 				ft_strdel(&tab[i++]);
 			free(tab);
 			tab = NULL;
 			reset(list);
-			return (put_content(list, size + 1));
+			return (put_content(list, size + 1)); //on rappel la meme fonction en incrementant de 1
 		}
 	}
 	return (tab);

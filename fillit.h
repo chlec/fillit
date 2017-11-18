@@ -45,4 +45,9 @@ char			*ft_strdup(const char *s1);
 void	ft_list_push_back(t_list **begin_list, void *data);
 int		check_content(char *str);
 void	ft_putchar(char c);
+int		ft_strlen(char *str);
+int		get_height(t_tetrim *aa);
+int		get_width(t_tetrim *aa);
+void	ft_strdel(char **as);
+
 #endif
