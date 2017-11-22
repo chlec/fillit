@@ -15,13 +15,22 @@
 int		get_height(t_tetrim *aa)
 {
 	int		i;
+	int		j;
 	int		count;
 
 	i = 0;
 	count = 0;
-	while (aa->content[i] && aa->content[i][0] != '.')
+	while (aa->content[i])
 	{
-		count++;
+		j = 0;
+		while (aa->content[i][j])
+		{
+			if (aa->content[i][j] != '.') {
+				count++;
+				break;
+			}
+			j++;
+		}
 		i++;
 	}
 	return (count);
@@ -30,13 +39,24 @@ int		get_height(t_tetrim *aa)
 int		get_width(t_tetrim *aa)
 {
 	int		i;
+	int		j;
 	int		count;
 
 	i = 0;
+	j = 0;
 	count = 0;
-	while (aa->content[0][i] && aa->content[0][i] != '.')
+	while (aa->content[i])
 	{
-		count++;
+		j = j;
+		while (aa->content[i][j])
+		{
+			if (aa->content[i][j] != '.') {
+				count++;
+			}
+			else if (aa->content[i][j] == '.')
+				break;
+			j++;
+		}
 		i++;
 	}
 	return (count);
