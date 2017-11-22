@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/22 12:53:28 by mdaunois         ###   ########.fr       */
+/*   Updated: 2017/11/22 13:17:04 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,24 +191,30 @@ int		isValid(char **tab, int size, t_list *list)
 	if (list == NULL)
 		return (1);
 	aa = (t_tetrim*)(list->content);
-	//if ()
+	if ((chek(aa, tab, size)))
+	{
+		add_tetrim(aa, tab, size);		
+		return isValid(tab, size, list->next);
+	}
 	aa->x = 0;
 	while (aa->x < size - get_height(aa))
 	{
 		aa->y = 0;
 		while (aa->y < size - get_width(aa))
 		{
+			sleep(1);
 			printf("Trying: %c %d %d\n", aa->letter, aa->x, aa->y);
-			//	print_tab(tab);
+				print_tab(tab);
 			if (chek(aa, tab, size))
 			{
 				add_tetrim(aa, tab, size);		
 				if (isValid(tab, size, list->next) == 1)
-				{	
-					//add_tetrim(aa, tab, size);		
+				{			
 					//printf("Trying: %c %d %d\n", aa->letter, aa->x, aa->y);
 					return (1);
 				}
+				else
+					remove_tetrim(tab, size, aa);
 			}
 			aa->y++;
 		}
@@ -227,8 +233,8 @@ char	**put_content(t_list **list, int size)
 
 	head = *list;
 	tab = create_tab(size);
-	while (head)
-	{
+//	while (head)
+//	{
 	/*	good = 0;
 		aa = (t_tetrim*)(head->content);
 		printf("Trying: %c %d %d\n", aa->letter, aa->x, aa->y);
@@ -256,7 +262,7 @@ char	**put_content(t_list **list, int size)
 			reset(list);
 			return (put_content(list, size + 1)); //on rappel la meme fonction en incrementant de 1
 		}
-	}
+//	}
 	return (tab);
 }
 
