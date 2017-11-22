@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/22 11:45:35 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/22 12:53:28 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,20 +191,28 @@ int		isValid(char **tab, int size, t_list *list)
 	if (list == NULL)
 		return (1);
 	aa = (t_tetrim*)(list->content);
+	//if ()
+	aa->x = 0;
 	while (aa->x < size - get_height(aa))
 	{
-		if (chek(aa, tab, size))
+		aa->y = 0;
+		while (aa->y < size - get_width(aa))
 		{
-			add_tetrim(aa, tab, size);
-			if (isValid(tab, size, list->next))
-				return (1);
+			printf("Trying: %c %d %d\n", aa->letter, aa->x, aa->y);
+			//	print_tab(tab);
+			if (chek(aa, tab, size))
+			{
+				add_tetrim(aa, tab, size);		
+				if (isValid(tab, size, list->next) == 1)
+				{	
+					//add_tetrim(aa, tab, size);		
+					//printf("Trying: %c %d %d\n", aa->letter, aa->x, aa->y);
+					return (1);
+				}
+			}
+			aa->y++;
 		}
-		aa->y++;
-		if (aa->y > size - get_width(aa))
-		{
-			aa->x++;
-			aa->y = 0;
-		}		
+		aa->x++;	
 	}
 	remove_tetrim(tab, size, aa);
 	return (0);
@@ -221,7 +229,7 @@ char	**put_content(t_list **list, int size)
 	tab = create_tab(size);
 	while (head)
 	{
-		/*good = 0;
+	/*	good = 0;
 		aa = (t_tetrim*)(head->content);
 		printf("Trying: %c %d %d\n", aa->letter, aa->x, aa->y);
 		while (aa->x < size - get_height(aa) && (!(good = chek(aa, tab, size))))
@@ -243,7 +251,6 @@ char	**put_content(t_list **list, int size)
 			return (tab);
 		else
 		{
-			printf("pas possible: %c\n", aa->letter);
 			print_tab(tab);
 			free_tab(tab);
 			reset(list);
