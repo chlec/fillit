@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/21 13:17:09 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/22 11:45:35 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,53 @@ int		chek(t_tetrim *aa, char **tab, int size)
 	return (1);
 }
 
+void	remove_tetrim(char **tab, int size, t_tetrim *aa)
+{
+	int a;
+	int b;
+	
+	a = 0;
+	while (a < size)
+	{
+		b = 0;
+		while (b < size)
+		{
+			if (tab[a][b] == aa->letter)
+				tab[a][b] = '.';
+			b++;
+		}
+		a++;
+	}
+	aa->x = 0;
+	aa->y = 0;
+}
+
+int		isValid(char **tab, int size, t_list *list)
+{
+	t_tetrim	*aa;
+
+	if (list == NULL)
+		return (1);
+	aa = (t_tetrim*)(list->content);
+	while (aa->x < size - get_height(aa))
+	{
+		if (chek(aa, tab, size))
+		{
+			add_tetrim(aa, tab, size);
+			if (isValid(tab, size, list->next))
+				return (1);
+		}
+		aa->y++;
+		if (aa->y > size - get_width(aa))
+		{
+			aa->x++;
+			aa->y = 0;
+		}		
+	}
+	remove_tetrim(tab, size, aa);
+	return (0);
+}
+
 char	**put_content(t_list **list, int size)
 {
 	t_tetrim	*aa;
@@ -174,7 +221,7 @@ char	**put_content(t_list **list, int size)
 	tab = create_tab(size);
 	while (head)
 	{
-		good = 0;
+		/*good = 0;
 		aa = (t_tetrim*)(head->content);
 		printf("Trying: %c %d %d\n", aa->letter, aa->x, aa->y);
 		while (aa->x < size - get_height(aa) && (!(good = chek(aa, tab, size))))
@@ -191,7 +238,9 @@ char	**put_content(t_list **list, int size)
 			//printf("sa pose %c, x: %d, y: %d\n", aa->letter, aa->x, aa->y);
 			add_tetrim(aa, tab, size);
 			head = head->next;
-		}
+		}*/
+		if (isValid(tab, size, head))
+			return (tab);
 		else
 		{
 			printf("pas possible: %c\n", aa->letter);
