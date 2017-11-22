@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/22 17:08:25 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/22 17:15:17 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,9 +151,12 @@ int		chek(t_tetrim *aa, char **tab, int size)
 		b = aa->y;
 		while (b <= size)
 		{
-			printf("Check %c: x%d y%d a%d b%d\n", aa->letter, x,y,a,b);
+		//	printf("Check %c: x%d y%d a%d b%d\n", aa->letter, x,y,a,b);
 			if (x < 4  && y < 4 && aa->content[x][y] != '.' && tab[a][b] != '.')
+			{
+			//	printf("not available: aa: %c, tab %c\n", aa->content[x][y], tab[a][b]);
 				return (0);
+			}
 			b++;
 			y++;
 		}
