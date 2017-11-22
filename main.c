@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/22 16:43:48 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/22 17:08:25 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int		chek(t_tetrim *aa, char **tab, int size)
 		b = aa->y;
 		while (b <= size)
 		{
-			//printf("Check %c: x%d y%d a%d b%d\n", aa->letter, x,y,a,b);
+			printf("Check %c: x%d y%d a%d b%d\n", aa->letter, x,y,a,b);
 			if (x < 4  && y < 4 && aa->content[x][y] != '.' && tab[a][b] != '.')
 				return (0);
 			b++;
@@ -210,6 +210,8 @@ int		isValid(char **tab, int size, t_list **head)
 	t_list		*list;
 
 	list = *head;
+	if (!list)
+		return (1);
 	aa = (t_tetrim*)(list->content);
 	while (isintab(tab, aa) && list)
 	{
@@ -222,38 +224,29 @@ int		isValid(char **tab, int size, t_list **head)
 	while (!isintab(tab, aa) && aa->x < size - get_height(aa))
 	{
 		usleep(100000);
-		printf("Trying: %c %d %d\n", aa->letter, aa->x, aa->y);
 		print_tab(tab);
 		if (chek(aa, tab, size))
 		{
-			add_tetrim(aa, tab, size);
-			printf("letter %c put\n", aa->letter);
+			add_tetrim(aa, tab, size);	
 			if (isValid(tab, size, head) == 1)
-			{			
-				//printf("Trying: %c %d %d\n", aa->letter, aa->x, aa->y);
 				return (1);
-			}
 			else
 			{
-				aa->y++;
-				if (aa->y == size)
-				{
-					aa->y = 0;
-					aa->x++;
-				}
-		//		remove_tetrim(tab, size, aa);
-				//list = list->next;
-				//aa = (t_tetrim*)(list->content);
-				//return (isValid(tab, size, head));//&(list->next)));
+				remove_tetrim(tab, size, aa);
+				list = list->next;
+				if (list)
+					aa = (t_tetrim*)(list->content);
+				else
+					return (0);	
 			}
 		}
-		else
-		{
-			list = list->next;
-			if (list)
-				aa = (t_tetrim*)(list->content);
-			else
-				return (0);
+		else {
+			aa->y++;
+			if (aa->y > size - get_width(aa))
+			{
+				aa->y = 0;
+				aa->x++;
+			}
 		}
 	}
 	remove_tetrim(tab, size, aa);
@@ -269,36 +262,15 @@ char	**put_content(t_list **list, int size)
 
 	head = *list;
 	tab = create_tab(size);
-//	while (head)
-//	{
-	/*	good = 0;
-		aa = (t_tetrim*)(head->content);
-		printf("Trying: %c %d %d\n", aa->letter, aa->x, aa->y);
-		while (aa->x < size - get_height(aa) && (!(good = chek(aa, tab, size))))
-		{
-			aa->y++;
-			if (aa->y > size - get_width(aa))
-			{
-				aa->x++;
-				aa->y = 0;
-			}	
-		}
-		if (good)
-		{
-			//printf("sa pose %c, x: %d, y: %d\n", aa->letter, aa->x, aa->y);
-			add_tetrim(aa, tab, size);
-			head = head->next;
-		}*/
-		if (isValid(tab, size, &head))
-			return (tab);
-		else
-		{
-			//print_tab(tab);
-			free_tab(tab);
-			reset(list);
-			return (put_content(list, size + 1)); //on rappel la meme fonction en incrementant de 1
-		}
-//	}
+	if (isValid(tab, size, &head))
+		return (tab);
+	else
+	{
+		//print_tab(tab);
+		free_tab(tab);
+		reset(list);
+		return (put_content(list, size + 1)); //on rappel la meme fonction en incrementant de 1
+	}
 	return (tab);
 }
 
