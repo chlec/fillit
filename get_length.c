@@ -56,3 +56,15 @@ int		get_width(t_tetrim *aa)
 	}
 	return (count);
 }
+
+int     get_lowersize(t_list *list)
+{
+    t_tetrim *aa;
+    int size;
+    
+    aa = (t_tetrim*)(list->content);
+    size = get_width(aa);
+    if (get_height(aa) > size)
+        size = get_height(aa);
+    return (size);
+}

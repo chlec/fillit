@@ -35,3 +35,84 @@ t_tetrim	*ft_create_elem(char **content, int x, int y, char letter)
 	}
 	return (list);
 }
+
+char	**create_tab(int size)
+{
+    char	**tab;
+    int		x;
+    int		j;
+    
+    x = 0;
+    if (!(tab = (char**)malloc(sizeof(char*) * (size + 1))))
+        return (0);
+    while (x < size)
+    {
+        j = 0;
+        if (!(tab[x] = (char*)malloc(sizeof(char) * (size + 1))))
+            return (0);
+        while (j < size)
+        {
+            tab[x][j] = '.';
+            j++;
+        }
+        tab[x][j] = '\0';
+        x++;
+    }
+    tab[x] = 0;
+    return (tab);
+}
+
+void	print_tab(char **tab)
+{
+    int		i;
+    int		j;
+    
+    i = 0;
+    while (tab[i])
+    {
+        j = 0;
+        while (tab[i][j]) {
+            ft_putchar(tab[i][j]);
+            j++;
+        }
+        i++;
+        ft_putchar('\n');
+    }
+}
+
+void	free_tab(char **tab)
+{
+    int		i;
+    
+    i = 0;
+    while (tab[i])
+        ft_strdel(&tab[i++]);
+    free(tab);
+    tab = NULL;
+}
+
+
+void	add_tetrim(t_tetrim *aa, char **tab, int size)
+{
+    int x;
+    int y;
+    int a;
+    int b;
+    
+    a = aa->x;
+    x = 0;
+    while (a < size)
+    {
+        y = 0;
+        b = aa->y;
+        while (b < size)
+        {
+            if (x < 4 && y < 4 && aa->content[x][y] != '.' && tab[a] && tab[a][b] && tab[a][b] == '.')
+                tab[a][b] = aa->content[x][y];
+            b++;
+            y++;
+        }
+        a++;
+        x++;
+    }
+}

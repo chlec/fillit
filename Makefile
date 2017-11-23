@@ -12,7 +12,14 @@
 
 NAME = fillit
 
-SRCS = *.c
+SRCS =	check_tetrim.c \
+	ft_func.c \
+	get_length.c \
+	resolv.c \
+	ft_create_elem.c \
+	ft_list_push_back.c \
+	main.c \
+	store_data.c \
 
 OBJ = *.o
 
