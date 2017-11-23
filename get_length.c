@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/17 12:57:28 by mdaunois         ###   ########.fr       */
+/*   Updated: 2017/11/23 12:52:07 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ int		get_height(t_tetrim *aa)
 
 	i = 0;
 	count = 0;
-	while (aa->content[i])
+	while (i < 4)
 	{
 		j = 0;
-		while (aa->content[i][j])
+		while (j < 4)
 		{
 			if (aa->content[i][j] != '.') {
 				count++;
-				break;
+				j = 3;
 			}
 			j++;
 		}
@@ -45,16 +45,16 @@ int		get_width(t_tetrim *aa)
 	i = 0;
 	j = 0;
 	count = 0;
-	while (aa->content[i])
+	while (i < 4)
 	{
-		j = j;
-		while (aa->content[i][j])
+		j = 0;
+		while (j < 4)
 		{
-			if (aa->content[i][j] != '.') {
-				count++;
+			if (aa->content[i][j] != '.')
+		   	{
+				if (count < i)
+					count = i;
 			}
-			else if (aa->content[i][j] == '.')
-				break;
 			j++;
 		}
 		i++;
