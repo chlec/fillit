@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/22 17:15:17 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/23 12:52:04 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,11 @@ void	add_tetrim(t_tetrim *aa, char **tab, int size)
 	
 	a = aa->x;
 	x = 0;
-	while (a <= size)
+	while (a < size)
 	{
 		y = 0;
 		b = aa->y;
-		while (b <= size)
+		while (b < size)
 		{
 			if (x < 4 && y < 4 && aa->content[x][y] != '.' && tab[a] && tab[a][b] && tab[a][b] == '.')
 				tab[a][b] = aa->content[x][y];
@@ -145,11 +145,11 @@ int		chek(t_tetrim *aa, char **tab, int size)
 
 	a = aa->x;
 	x = 0;
-	while (a <= size)
+	while (a < size)
 	{
 		y = 0;
 		b = aa->y;
-		while (b <= size)
+		while (b < size)
 		{
 			printf("Check %c: x%d y%d a%d b%d\n", aa->letter, x,y,a,b);
 			if (x < 4  && y < 4 && aa->content[x][y] != '.' && tab[a][b] != '.')
@@ -224,9 +224,13 @@ int		isValid(char **tab, int size, t_list **head)
 		else
 			return (1);
 	}
-	while (!isintab(tab, aa) && aa->x < size - get_height(aa))
+
+		printf("TEST\n");
+	while (!isintab(tab, aa) && aa->x <= size - get_height(aa))
 	{
+		printf("TEST\n");
 		usleep(100000);
+		printf("pour %c = hauteur:%d longeur:%d \n",aa->letter, get_height(aa), get_width(aa));
 		print_tab(tab);
 		if (chek(aa, tab, size))
 		{
@@ -244,6 +248,7 @@ int		isValid(char **tab, int size, t_list **head)
 			}
 		}
 		else {
+		printf("TEST2\n");
 			aa->y++;
 			if (aa->y > size - get_width(aa))
 			{
