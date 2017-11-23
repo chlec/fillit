@@ -12,15 +12,26 @@
 
 NAME = fillit
 
-SRCS = *.c
+SRCS =	main.c \
+		check_tetrim.c \
+		ft_create_elem.c \
+		get_length.c \
+		ft_list_push_back.c \
+		store_data.c
 
-OBJ = *.o
+OBJ = $(SRCS:.c=.o)
 
-all: $(NAME)
+LIBFT = ./libft
+
+FLAGS = -Wall -Werror -Wextra
+
+all:
+	make -C $(LIBFT)
+	$(MAKE) $(NAME)
 
 $(NAME):
-	gcc $(SRCS) -c
-	gcc $(OBJ) libft/libft.a -o $(NAME)
+	gcc $(FLAGS) $(SRCS) -c
+	gcc $(OBJ) $(LIBFT)/libft.a -o $(NAME)
 
 clean:
 	rm -f $(OBJ)
@@ -29,3 +40,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re

@@ -40,7 +40,6 @@ int		get_width(t_tetrim *aa)
 {
 	int		i;
 	int		j;
-	int		count;
 
 	j = 3;
 	while (j >= 0)
@@ -54,5 +53,5 @@ int		get_width(t_tetrim *aa)
 		}
 		j--;
 	}
-	return (count);
+	return (0);
 }

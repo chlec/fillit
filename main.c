@@ -204,8 +204,8 @@ int		isValid(char **tab, int size, t_list *list)
 	aa->y = 0;
 	while (aa->x <= size - get_height(aa))
 	{
-		usleep(100000);
-		print_tab(tab);
+		//usleep(100000);
+		//print_tab(tab);
 		if (chek(aa, tab, size))
 		{
 			add_tetrim(aa, tab, size);	
@@ -226,9 +226,7 @@ int		isValid(char **tab, int size, t_list *list)
 
 char	**put_content(t_list *list, int size)
 {
-	t_tetrim	*aa;
 	char		**tab;
-	int			good;
 
 	tab = create_tab(size);
 	if (isValid(tab, size, list))
@@ -250,21 +248,24 @@ int		main(int argc, char **argv)
 	char	**tab;
 	int size;
 
-	size = 4;	
-	fd = open(argv[1], O_RDONLY);
-	if (fd > -1)
+	if (argc == 2)
 	{
-		content = get_file_content(fd);
-		if (check_content(content))
+		size = 4;	
+		fd = open(argv[1], O_RDONLY);
+		if (fd > -1)
 		{
-			list = split_by_jumpline(content);
-			tab = put_content(list, size);
-			print_tab(tab);
-			//free(tab);	
-			free(content);
-			close(fd);
+			content = get_file_content(fd);
+			if (check_content(content))
+			{
+				list = split_by_jumpline(content);
+				tab = put_content(list, size);
+				print_tab(tab);
+				//free(tab);	
+				free(content);
+				close(fd);
+			}
+			else
+				printf("error\n");
 		}
-		else
-			printf("error\n");
 	}
 }

@@ -14,7 +14,7 @@
 
 int		check_together(char *str)
 {
-	int		i;
+	size_t	i;
 	int		count;
 
 	i = 0;
