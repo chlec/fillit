@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/16 11:50:28 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/24 15:28:33 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/24 16:06:31 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,19 @@ int		nb_words(char *str)
 	return (words);
 }
 
+char	**store_tetrim(char **tab, char *c, t_list **head, char *str)
+{
+	replace_diese(tab, *c);
+	move_tetrim_x(tab);
+	move_tetrim_y(tab);
+	ft_list_push_back(head, ft_create_elem(tab, 0, 0, *c));
+	free_tab(tab);
+	if (!(tab = (char**)malloc(sizeof(*tab) * (nb_words(str) + 1))))
+		return (0);
+	(*c)++;
+	return (tab);
+}
+
 t_list	*split_by_jumpline(char *str)
 {
 	t_list		*head;
@@ -77,20 +90,13 @@ t_list	*split_by_jumpline(char *str)
 			else
 			{
 				tab[id] = 0;
-				replace_diese(tab, c);
-				move_tetrim_x(tab);
-				move_tetrim_y(tab);
-				ft_list_push_back(&head, ft_create_elem(tab, 0, 0, c));
-				c++;
-				free(tab);
-				if (!(tab = (char**)malloc(sizeof(*tab) * (nb_words(str) + 1))))
-					return (0);
+				tab = store_tetrim(tab, &c, &head, str);
 				id = 0;
 			}
 			start = end + 2;
 		}
 		end++;
 	}
-	free(tab);
+	free_tab(tab);
 	return (head);
 }
