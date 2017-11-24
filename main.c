@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/24 15:05:58 by mdaunois         ###   ########.fr       */
+/*   Updated: 2017/11/24 15:12:02 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,7 +270,7 @@ int		main(int argc, char **argv)
 				close(fd);
 			}
 			else
-				ft_putstrendl("error");
+				ft_putendl("error");
 		}
 	}
 }
