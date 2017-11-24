@@ -56,7 +56,7 @@ char	**store_tetrim(char **tab, char *c, t_list **head, char *str)
 	move_tetrim_x(tab);
 	move_tetrim_y(tab);
 	ft_list_push_back(head, ft_create_elem(tab, 0, 0, *c));
-	free_tab(tab);
+	free(tab);
 	if (!(tab = (char**)malloc(sizeof(*tab) * (nb_words(str) + 1))))
 		return (0);
 	(*c)++;
@@ -97,6 +97,6 @@ t_list	*split_by_jumpline(char *str)
 		}
 		end++;
 	}
-	free_tab(tab);
+	free(tab);
 	return (head);
 }
