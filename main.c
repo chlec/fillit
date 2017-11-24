@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/24 11:03:48 by mdaunois         ###   ########.fr       */
+/*   Updated: 2017/11/24 15:05:58 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,10 +137,8 @@ int		chek(t_tetrim *aa, char **tab, int size)
 		b = aa->y;
 		while (b < size)
 		{
-			//printf("Check %c: x%d y%d a%d b%d\n", aa->letter, x,y,a,b);
 			if (x < 4  && y < 4 && aa->content[x][y] != '.' && tab[a][b] != '.')
 			{
-			//	printf("not available: aa: %c, tab %c\n", aa->content[x][y], tab[a][b]);
 				return (0);
 			}
 			b++;
@@ -169,8 +167,6 @@ void	remove_tetrim(char **tab, int size, t_tetrim *aa)
 		}
 		a++;
 	}
-	/*aa->y = 0;
-	aa->x = 0;*/
 }
 
 int		isintab(char **tab, t_tetrim *aa)
@@ -204,8 +200,6 @@ int		isValid(char **tab, int size, t_list *list)
 	aa->y = 0;
 	while (aa->x <= size - get_height(aa))
 	{
-		//usleep(100000);
-		//print_tab(tab);
 		if (chek(aa, tab, size))
 		{
 			add_tetrim(aa, tab, size);	
@@ -265,7 +259,7 @@ int		main(int argc, char **argv)
 		if (fd > -1)
 		{
 			content = get_file_content(fd);
-			if (check_content(content))
+			if (content != NULL && check_content(content))
 			{
 				list = split_by_jumpline(content);
 				size = get_lowersize(list);
@@ -276,7 +270,7 @@ int		main(int argc, char **argv)
 				close(fd);
 			}
 			else
-				printf("error\n");
+				ft_putstrendl("error");
 		}
 	}
 }
