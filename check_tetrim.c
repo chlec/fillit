@@ -6,40 +6,34 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 16:28:19 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/24 14:38:39 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/24 14:48:11 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		check_coller(int *tab)
+int		check_sticked(int *tab)
 {
 	int		i;
 	int		j;
-	int		c;
-	int		w;
+	int		count;
 
 	i = 0;
-	w = 0;
+	count = 0;
 	while (i < 4)
 	{
-		c = 0;
 		j = 0;
 		while (j < 4)
 		{
 			if (tab[i] != tab[j])
-			{
-				if (tab[j] + 5 == tab[i] || tab[j] - 1 == tab[i] || tab[j] + 1 == tab[i] || tab[j] - 5 == tab[i])
-					c++;
-			}
+				if (tab[j] + 5 == tab[i] || tab[j] - 1 == tab[i]
+					|| tab[j] + 1 == tab[i] || tab[j] - 5 == tab[i])
+					count++;
 			j++;
 		}
-		w += c;
 		i++;
 	}
-	if (w >= 6)
-		return (1);
-	return (0);
+	return (count >= 6);
 }
 
 int		check_together(char *str)
@@ -59,7 +53,7 @@ int		check_together(char *str)
 		{
 			if (count != 4)
 				return (0);
-			if (!check_coller(tab))
+			if (!check_sticked(tab))
 				return (0);
 			free(tab);
 			tab = (int*)malloc(sizeof(int) * 4);
