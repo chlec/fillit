@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:53:29 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/22 13:50:22 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/24 12:50:14 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <string.h>
-# define BUF_SIZE 20
+# define BUF_SIZE 1
 
 char	*ft_strcpy(char *dst, char *src);
 char	*ft_strcat(char *s1, const char *s2);
