@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/24 15:16:41 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/24 15:29:39 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/24 16:31:52 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	replace_diese(char **tab, char c)
 	}
 }
 
-void	move_tetrim_x(char	**tab)
+void	move_tetrim_x(char **tab)
 {
 	int		i;
 	int		j;
@@ -39,7 +39,7 @@ void	move_tetrim_x(char	**tab)
 	i = 0;
 	j = 0;
 	if (!ft_strcmp(tab[0], "...."))
-	{		
+	{
 		while (tab[j])
 		{
 			if (ft_strcmp(tab[j], "....") != 0)
@@ -57,7 +57,23 @@ void	move_tetrim_x(char	**tab)
 	}
 }
 
-void	move_tetrim_y(char	**tab)
+void	move_tetrim_ybis(char **tab, int *i, int *j, int *y)
+{
+	while (*i < 4)
+	{
+		while (*j < 4)
+		{
+			tab[*j][*y] = tab[*j][*i];
+			tab[*j][*i] = '.';
+			(*j)++;
+		}
+		(*j) = 0;
+		(*y)++;
+		(*i)++;
+	}
+}
+
+void	move_tetrim_y(char **tab)
 {
 	int		i;
 	int		j;
@@ -65,7 +81,8 @@ void	move_tetrim_y(char	**tab)
 
 	y = 0;
 	i = 1;
-	if (tab[0][0] == '.' && tab[1][0] == '.' && tab[2][0] == '.' && tab[3][0] == '.')
+	if (tab[0][0] == '.' && tab[1][0] == '.' && tab[2][0] == '.'
+			&& tab[3][0] == '.')
 		while (i < 4)
 		{
 			j = 0;
@@ -73,18 +90,7 @@ void	move_tetrim_y(char	**tab)
 			{
 				if (tab[j][i] != '.')
 				{
-					while (i < 4)
-					{
-						while (j < 4)
-						{
-							tab[j][y] = tab[j][i];
-							tab[j][i] = '.';
-							j++;
-						}
-						j = 0;
-						y++;
-						i++;
-					}
+					move_tetrim_ybis(tab, &i, &j, &y);
 					return ;
 				}
 				j++;

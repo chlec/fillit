@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/23 13:02:14 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/24 16:35:27 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int		get_height(t_tetrim *aa)
 		j = 0;
 		while (j < 4)
 		{
-			if (aa->content[i][j] != '.') {
+			if (aa->content[i][j] != '.')
+			{
 				count++;
 				j = 3;
 			}
@@ -48,7 +49,7 @@ int		get_width(t_tetrim *aa)
 		while (i >= 0)
 		{
 			if (aa->content[i][j] != '.')
-		   		return (j + 1);
+				return (j + 1);
 			i--;
 		}
 		j--;

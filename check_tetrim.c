@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 16:28:19 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/24 14:56:25 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/24 16:53:12 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		check_sticked(int *tab)
 		{
 			if (tab[i] != tab[j])
 				if (tab[j] + 5 == tab[i] || tab[j] - 1 == tab[i]
-					|| tab[j] + 1 == tab[i] || tab[j] - 5 == tab[i])
+						|| tab[j] + 1 == tab[i] || tab[j] - 5 == tab[i])
 					count++;
 			j++;
 		}
@@ -48,7 +48,7 @@ int		check_together(char *str)
 	while (str[i])
 	{
 		if (str[i] == '#')
-			tab[count++] = i;				
+			tab[count++] = i;
 		else if (str[i] == '\n' && (str[i + 1] == '\n' || str[i + 1] == '\0'))
 		{
 			if (count != 4)
@@ -77,11 +77,16 @@ int		check_square(char *str)
 		if (str[i] == '\n')
 		{
 			if (j != 5 && j != 1)
-			{
 				return (0);
-			}
 			j = 0;
 		}
+		i++;
+	}
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '#' && str[i] != '.' && str[i] != '\n')
+			return (0);
 		i++;
 	}
 	return (1);
@@ -114,23 +119,10 @@ int		check_jumpline(char *str)
 	return (1);
 }
 
-int		check_charac(char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] != '#' && str[i] != '.' && str[i] != '\n')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 int		check_content(char *str)
 {
-	if ((check_charac(str) && check_jumpline(str) && check_square(str) && check_together(str)))
+	if ((check_jumpline(str)
+				&& check_square(str) && check_together(str)))
 		return (1);
 	return (0);
 }
