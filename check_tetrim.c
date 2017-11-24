@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 16:28:19 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/24 14:48:11 by clecalie         ###   ########.fr       */
+/*   Updated: 2017/11/24 14:56:25 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,17 @@ int		check_jumpline(char *str)
 		if (str[i] == '\n' && str[i + 1] && str[i + 1] == '\n'
 				&& str[i + 2] && str[i + 2] == '\n')
 			return (0);
-		if (str[i] == '\n')
+		if (str[i] == '\n' && str[i - 1] != '\n')
 			count++;
+		if (str[i] == '\n' && (str[i + 1] == '\n' || str[i + 1] == '\0'))
+		{
+			if (count != 4)
+				return (0);
+			count = 0;
+		}
 		i++;
 	}
-	if ((count + 1) % 5 == 0)
-		return (1);
-	return (0);
+	return (1);
 }
 
 int		check_charac(char *str)
