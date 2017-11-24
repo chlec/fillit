@@ -6,7 +6,7 @@
 #    By: clecalie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/14 16:17:06 by clecalie          #+#    #+#              #
-#    Updated: 2017/11/14 16:18:42 by clecalie         ###   ########.fr        #
+#    Updated: 2017/11/24 13:36:04 by clecalie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,18 +25,19 @@ LIBFT = ./libft
 
 FLAGS = -Wall -Werror -Wextra
 
-all:
-	make -C $(LIBFT)
-	$(MAKE) $(NAME)
+all: $(NAME)
 
 $(NAME):
+	make -C $(LIBFT)
 	gcc $(FLAGS) $(SRCS) -c
 	gcc $(OBJ) $(LIBFT)/libft.a -o $(NAME)
 
 clean:
+	make -C $(LIBFT) clean
 	rm -f $(OBJ)
 
 fclean: clean
+	make -C $(LIBFT) fclean
 	rm -f $(NAME)
 
 re: fclean all
