@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/23 12:52:04 by mdaunois         ###   ########.fr       */
+/*   Updated: 2017/11/24 11:03:48 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,11 +233,22 @@ char	**put_content(t_list *list, int size)
 		return (tab);
 	else
 	{
-		//print_tab(tab);
 		free_tab(tab);
-		return (put_content(list, size + 1)); //on rappel la meme fonction en incrementant de 1
+		return (put_content(list, size + 1));
 	}
 	return (tab);
+}
+
+int		get_lowersize(t_list *list)
+{
+	int size;
+	t_tetrim *aa;
+ 
+	aa = (t_tetrim*)(list->content);
+	size = get_width(aa);
+	if (size < get_height(aa))
+		size = get_height(aa);
+	return (size);
 }
 
 int		main(int argc, char **argv)
@@ -249,8 +260,7 @@ int		main(int argc, char **argv)
 	int size;
 
 	if (argc == 2)
-	{
-		size = 4;	
+	{	
 		fd = open(argv[1], O_RDONLY);
 		if (fd > -1)
 		{
@@ -258,9 +268,10 @@ int		main(int argc, char **argv)
 			if (check_content(content))
 			{
 				list = split_by_jumpline(content);
+				size = get_lowersize(list);
 				tab = put_content(list, size);
 				print_tab(tab);
-				//free(tab);	
+				free_tab(tab);	
 				free(content);
 				close(fd);
 			}
