@@ -6,46 +6,63 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 16:28:19 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/24 13:19:19 by mdaunois         ###   ########.fr       */
+/*   Updated: 2017/11/24 14:38:39 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
+int		check_coller(int *tab)
+{
+	int		i;
+	int		j;
+	int		c;
+	int		w;
+
+	i = 0;
+	w = 0;
+	while (i < 4)
+	{
+		c = 0;
+		j = 0;
+		while (j < 4)
+		{
+			if (tab[i] != tab[j])
+			{
+				if (tab[j] + 5 == tab[i] || tab[j] - 1 == tab[i] || tab[j] + 1 == tab[i] || tab[j] - 5 == tab[i])
+					c++;
+			}
+			j++;
+		}
+		w += c;
+		i++;
+	}
+	if (w >= 6)
+		return (1);
+	return (0);
+}
+
 int		check_together(char *str)
 {
 	size_t	i;
 	int		count;
+	int		*tab;
 
 	i = 0;
 	count = 0;
-
+	tab = (int*)malloc(sizeof(int) * 4);
 	while (str[i])
 	{
-		if (count == 0)
-		{
-			if (str[i] == '#' && ((str[i + 1] && str[i + 1] == '#')
-					|| (i + 5 < ft_strlen(str) && str[i + 5] == '#')))
-				count++;
-		}
-		else if (count == 3)
-		{
-			if (str[i] == '#' && ((i > 0 && str[i - 1] == '#')
-					|| (i > 4 && str[i - 5] == '#')))
-				count++;
-		}
-		else
-		{
-			if (str[i] == '#' && (((str[i + 1] && str[i + 1] == '#')
-					|| (i + 5 < ft_strlen(str) && str[i + 5] == '#')) && ((i > 0 && str[i - 1] == '#')
-					|| (i > 4 && str[i - 5] == '#'))))
-				count++;
-		
-		}
-		if (str[i] == '\n' && (str[i + 1] == '\n' || str[i + 1] == '\0'))
+		if (str[i] == '#')
+			tab[count++] = i;				
+		else if (str[i] == '\n' && (str[i + 1] == '\n' || str[i + 1] == '\0'))
 		{
 			if (count != 4)
 				return (0);
+			if (!check_coller(tab))
+				return (0);
+			free(tab);
+			tab = (int*)malloc(sizeof(int) * 4);
 			count = 0;
 		}
 		i++;
