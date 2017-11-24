@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:47:16 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/24 15:12:02 by mdaunois         ###   ########.fr       */
+/*   Updated: 2017/11/24 15:28:11 by mdaunois         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	print_tab(char **tab)
 	while (tab[i])
 	{
 		j = 0;
-		while (tab[i][j]) {
+		while (tab[i][j])
+		{
 			ft_putchar(tab[i][j]);
 			j++;
 		}
@@ -97,12 +98,12 @@ char	*get_file_content(int fd)
 }
 
 void	add_tetrim(t_tetrim *aa, char **tab, int size)
-{	
+{
 	int x;
 	int y;
 	int a;
 	int b;
-	
+
 	a = aa->x;
 	x = 0;
 	while (a < size)
@@ -111,7 +112,8 @@ void	add_tetrim(t_tetrim *aa, char **tab, int size)
 		b = aa->y;
 		while (b < size)
 		{
-			if (x < 4 && y < 4 && aa->content[x][y] != '.' && tab[a] && tab[a][b] && tab[a][b] == '.')
+			if (x < 4 && y < 4 && aa->content[x][y] != '.' &&
+						tab[a] && tab[a][b] && tab[a][b] == '.')
 				tab[a][b] = aa->content[x][y];
 			b++;
 			y++;
@@ -120,7 +122,6 @@ void	add_tetrim(t_tetrim *aa, char **tab, int size)
 		x++;
 	}
 }
-
 
 int		chek(t_tetrim *aa, char **tab, int size)
 {
@@ -137,10 +138,8 @@ int		chek(t_tetrim *aa, char **tab, int size)
 		b = aa->y;
 		while (b < size)
 		{
-			if (x < 4  && y < 4 && aa->content[x][y] != '.' && tab[a][b] != '.')
-			{
+			if (x < 4 && y < 4 && aa->content[x][y] != '.' && tab[a][b] != '.')
 				return (0);
-			}
 			b++;
 			y++;
 		}
@@ -154,7 +153,7 @@ void	remove_tetrim(char **tab, int size, t_tetrim *aa)
 {
 	int a;
 	int b;
-	
+
 	a = 0;
 	while (a < size)
 	{
@@ -189,7 +188,7 @@ int		isintab(char **tab, t_tetrim *aa)
 	return (0);
 }
 
-int		isValid(char **tab, int size, t_list *list)
+int		isvalid(char **tab, int size, t_list *list)
 {
 	t_tetrim	*aa;
 
@@ -202,8 +201,8 @@ int		isValid(char **tab, int size, t_list *list)
 	{
 		if (chek(aa, tab, size))
 		{
-			add_tetrim(aa, tab, size);	
-			if (isValid(tab, size, list->next) == 1)
+			add_tetrim(aa, tab, size);
+			if (isvalid(tab, size, list->next) == 1)
 				return (1);
 			else
 				remove_tetrim(tab, size, aa);
@@ -223,7 +222,7 @@ char	**put_content(t_list *list, int size)
 	char		**tab;
 
 	tab = create_tab(size);
-	if (isValid(tab, size, list))
+	if (isvalid(tab, size, list))
 		return (tab);
 	else
 	{
@@ -235,9 +234,9 @@ char	**put_content(t_list *list, int size)
 
 int		get_lowersize(t_list *list)
 {
-	int size;
-	t_tetrim *aa;
- 
+	int			size;
+	t_tetrim	*aa;
+
 	aa = (t_tetrim*)(list->content);
 	size = get_width(aa);
 	if (size < get_height(aa))
@@ -251,10 +250,9 @@ int		main(int argc, char **argv)
 	t_list	*list;
 	char	*content;
 	char	**tab;
-	int size;
 
 	if (argc == 2)
-	{	
+	{
 		fd = open(argv[1], O_RDONLY);
 		if (fd > -1)
 		{
@@ -262,10 +260,9 @@ int		main(int argc, char **argv)
 			if (content != NULL && check_content(content))
 			{
 				list = split_by_jumpline(content);
-				size = get_lowersize(list);
-				tab = put_content(list, size);
+				tab = put_content(list, get_lowersize(list));
 				print_tab(tab);
-				free_tab(tab);	
+				free_tab(tab);
 				free(content);
 				close(fd);
 			}
