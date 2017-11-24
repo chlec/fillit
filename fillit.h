@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:53:29 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/24 15:11:39 by mdaunois         ###   ########.fr       */
+/*   Updated: 2017/11/24 15:18:08 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,8 @@ int		get_height(t_tetrim *aa);
 int		get_width(t_tetrim *aa);
 void	ft_strdel(char **as);
 void	ft_putendl(char const *s);
+void	replace_diese(char **tab, char c);
+void	move_tetrim_x(char **tab);
+void	move_tetrim_y(char **tab);
+
 #endif

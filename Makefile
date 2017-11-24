@@ -6,7 +6,7 @@
 #    By: clecalie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/14 16:17:06 by clecalie          #+#    #+#              #
-#    Updated: 2017/11/24 13:36:04 by clecalie         ###   ########.fr        #
+#    Updated: 2017/11/24 15:17:29 by clecalie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRCS =	main.c \
 		ft_create_elem.c \
 		get_length.c \
 		ft_list_push_back.c \
-		store_data.c
+		store_data.c \
+		move_tetrim.c
 
 OBJ = $(SRCS:.c=.o)
 

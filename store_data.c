@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/16 11:50:28 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/24 11:40:07 by mdaunois         ###   ########.fr       */
+/*   Updated: 2017/11/24 15:28:33 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,103 +50,21 @@ int		nb_words(char *str)
 	return (words);
 }
 
-void	replace_diese(char **tab, char c)
-{
-	int		i;
-	int		j;
-
-	j = 0;
-	while (tab[j])
-	{
-		i = 0;
-		while (tab[j][i])
-		{
-			if (tab[j][i] == '#')
-				tab[j][i] = c;
-			i++;
-		}
-		j++;
-	}
-}
-
-void	move_tetrim_x(char	**tab)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	if (!ft_strcmp(tab[0], "...."))
-	{		
-		while (tab[j])
-		{
-			if (ft_strcmp(tab[j], "....") != 0)
-			{
-				while (tab[j])
-				{
-					tab[i] = ft_strdup(tab[j]);
-					tab[j] = ft_strdup("....");
-					i++;
-					j++;
-				}
-			}
-			j++;
-		}
-	}
-}
-
-void	move_tetrim_y(char	**tab)
-{
-	int		i;
-	int		j;
-	int		y;
-
-	y = 0;
-	i = 1;
-	if (tab[0][0] == '.' && tab[1][0] == '.' && tab[2][0] == '.' && tab[3][0] == '.')
-		while (i < 4)
-		{
-			j = 0;
-			while (j < 4)
-			{
-				if (tab[j][i] != '.')
-				{
-					while (i < 4)
-					{
-						while (j < 4)
-						{
-							tab[j][y] = tab[j][i];
-							tab[j][i] = '.';
-							j++;
-						}
-						j = 0;
-						y++;
-						i++;
-					}
-					return ;
-				}
-				j++;
-			}
-			i++;
-		}
-}
-
 t_list	*split_by_jumpline(char *str)
 {
-	t_list	*head;
-	t_tetrim *content;
-	char	**tab;
-	char	*word;
-	int		start;
-	int		end;
-	int		id;
-	char	c;
+	t_list		*head;
+	char		**tab;
+	char		*word;
+	int			start;
+	int			end;
+	int			id;
+	char		c;
 
-	tab = (char**)malloc(sizeof(*tab) * (nb_words(str) + 1));
+	if (!(tab = (char**)malloc(sizeof(*tab) * (nb_words(str) + 1))))
+		return (0);
 	end = 0;
 	start = 0;
 	id = 0;
-	content = 0;
 	head = 0;
 	c = 'A';
 	while (str[end])
@@ -155,21 +73,18 @@ t_list	*split_by_jumpline(char *str)
 		{
 			word = get_word(str, start, end);
 			if (word[0] != '\n' && word[0] != '\0' && str[end + 1] != '\0')
-			{
 				tab[id++] = word;
-			}
 			else
 			{
 				tab[id] = 0;
 				replace_diese(tab, c);
 				move_tetrim_x(tab);
 				move_tetrim_y(tab);
-				content = ft_create_elem(tab, 0, 0, c);
+				ft_list_push_back(&head, ft_create_elem(tab, 0, 0, c));
 				c++;
-				ft_list_push_back(&head, content);
-				free(content);
 				free(tab);
-				tab = (char**)malloc(sizeof(*tab) * (nb_words(str) + 1));
+				if (!(tab = (char**)malloc(sizeof(*tab) * (nb_words(str) + 1))))
+					return (0);
 				id = 0;
 			}
 			start = end + 2;
