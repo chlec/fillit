@@ -6,7 +6,7 @@
 #    By: clecalie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/08 11:07:11 by clecalie          #+#    #+#              #
-#    Updated: 2017/11/13 16:58:08 by clecalie         ###   ########.fr        #
+#    Updated: 2017/11/27 11:01:34 by clecalie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OBJ = ft_atoi.o ft_bzero.o ft_isalnum.o ft_isalpha.o ft_isascii.o ft_isdigit.o f
 all: $(NAME)
 
 $(NAME):
-	gcc -c $(SRCS)
+	gcc -Wall -Wextra -Werror -c $(SRCS)
 	ar rc $(NAME) $(OBJ)
 
 clean:

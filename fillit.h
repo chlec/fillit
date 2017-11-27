@@ -6,7 +6,7 @@
 /*   By: clecalie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:53:29 by clecalie          #+#    #+#             */
-/*   Updated: 2017/11/24 16:51:13 by mdaunois         ###   ########.fr       */
+/*   Updated: 2017/11/27 11:39:56 by clecalie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,7 @@ int				isvalid(char **tab, int size, t_list *list);
 char			**put_content(t_list *list, int size);
 int				chek(t_tetrim *aa, char **tab, int size);
 void			remove_tetrim(char **tab, int size, t_tetrim *aa);
+char			**ft_strsplit(char const *s, char c);
+char			*ft_strnew(size_t size);
+
 #endif
